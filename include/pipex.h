@@ -6,7 +6,7 @@
 /*   By: amweyer <amweyer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:12:05 by amweyer           #+#    #+#             */
-/*   Updated: 2025/06/30 16:29:35 by amweyer          ###   ########.fr       */
+/*   Updated: 2025/06/30 19:50:22 by amweyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,27 @@
 # define INT_MIN -2147483648
 # define INT_MAX 2147483647
 
+typedef struct s_cmd
+{
+	char	*cmd;
+	char	*path;
+	char	**args;
+}			t_cmd;
+
 /* parsing.c */
-int		parse(int ac, char **av, char **envp);
-char	*extract_path(char **envp);
-char	*get_path(char *cmd, char *path);
-int		check_cmd(char *args, char *path);
-void	free_tab(char **tab);
+int			parse(char **av, t_cmd *cmd1, t_cmd *cmd2);
+char		*extract_path(char **envp);
+char		*get_path(char *cmd, char **envp);
+char		**get_args(char *args);
+void		free_tab(char **tab);
+t_cmd		*init_cmd(char *arg, char **envp);
+
+/* free.c */
+
+void		free_tab(char **tab);
+void		free_struct(t_cmd *cmd);
+
+/* errors.c */
+void		print_error(char *msg);
 
 #endif
