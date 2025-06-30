@@ -1,45 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   files.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amweyer <amweyer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/30 19:28:20 by amweyer           #+#    #+#             */
-/*   Updated: 2025/06/30 20:44:26 by amweyer          ###   ########.fr       */
+/*   Created: 2025/06/30 20:08:02 by amweyer           #+#    #+#             */
+/*   Updated: 2025/06/30 20:24:27 by amweyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	free_tab(char **tab)
+int	get_fd(char *file, int in)
 {
-	int	i;
+	int fd;
 
-	i = 0;
-	while (tab[i])
+	if (in)
+		fd = open(file, O_RDONLY);
+	else
+		fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+	if (fd == -1)
 	{
-		free(tab[i]);
-		i++;
+		perror("Erreur ouverture fichier");
+		return (1);
 	}
-	free(tab);
-}
-
-void	free_struct(t_cmd *cmd)
-{
-	if (!cmd)
-		return ;
-	if (cmd->args)
-		free_tab(cmd->args);
-	if (cmd->cmd)
-		free(cmd->cmd);
-	if (cmd->path)
-		free(cmd->path);
-	free(cmd);
-}
-void	free_error(t_cmd *cmd1, t_cmd *cmd2)
-{
-	free_struct(cmd1);
-	free_struct(cmd2);
-	exit(1);
+	return (fd);
 }

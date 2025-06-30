@@ -6,7 +6,7 @@
 #    By: amweyer <amweyer@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/29 15:01:22 by amweyer           #+#    #+#              #
-#    Updated: 2025/06/30 19:41:47 by amweyer          ###   ########.fr        #
+#    Updated: 2025/06/30 20:24:50 by amweyer          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ SRC =  $(SRC_DIR)/main.c \
        $(SRC_DIR)/free.c \
        $(SRC_DIR)/utils.c \
        $(SRC_DIR)/errors.c \
+       $(SRC_DIR)/files.c \
 
 
 

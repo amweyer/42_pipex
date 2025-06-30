@@ -6,7 +6,7 @@
 /*   By: amweyer <amweyer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:12:05 by amweyer           #+#    #+#             */
-/*   Updated: 2025/06/30 19:50:22 by amweyer          ###   ########.fr       */
+/*   Updated: 2025/06/30 20:45:41 by amweyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,12 @@ t_cmd		*init_cmd(char *arg, char **envp);
 
 void		free_tab(char **tab);
 void		free_struct(t_cmd *cmd);
+void		free_error(t_cmd *cmd1, t_cmd *cmd2);
 
 /* errors.c */
 void		print_error(char *msg);
+
+/* files.c */
+int			get_fd(char *file, int in);
 
 #endif
