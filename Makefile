@@ -6,11 +6,11 @@
 #    By: amweyer <amweyer@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/29 15:01:22 by amweyer           #+#    #+#              #
-#    Updated: 2025/06/17 11:36:04 by amweyer          ###   ########.fr        #
+#    Updated: 2025/06/30 16:05:50 by amweyer          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = push_swap
+NAME = pipex
 # NAME_BONUS = checker
 
 #include directories
@@ -20,21 +20,9 @@ BONUS_OBJ_DIR = bonus_obj
 INC_DIR = include
 LIBFT_DIR = libft
 PRINTF_DIR = printf
-
 SRC =  $(SRC_DIR)/main.c \
        $(SRC_DIR)/parsing.c \
-       $(SRC_DIR)/errors.c \
-       $(SRC_DIR)/push.c \
-       $(SRC_DIR)/rotate.c \
-       $(SRC_DIR)/rrotate.c \
-       $(SRC_DIR)/swap.c \
-       $(SRC_DIR)/utils.c  \
-       $(SRC_DIR)/sort.c   \
-       $(SRC_DIR)/stack_utils.c   \
-       $(SRC_DIR)/sort_utils.c   \
-       $(SRC_DIR)/move_utils.c   \
-       $(SRC_DIR)/cost_utils.c   \
-       $(SRC_DIR)/sort_back_utils.c   \
+
 	   
 
 
