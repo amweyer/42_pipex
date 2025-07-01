@@ -6,30 +6,37 @@
 /*   By: amweyer <amweyer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 17:48:46 by amweyer           #+#    #+#             */
-/*   Updated: 2025/06/30 19:53:44 by amweyer          ###   ########.fr       */
+/*   Updated: 2025/07/01 18:45:25 by amweyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	parse(char **av, t_cmd *cmd1, t_cmd *cmd2)
+t_pipeline	*init_pipeline(int ac, char **av, char **envp)
 {
-	if (access(av[1], R_OK) != 0)
+	t_pipeline	*pipeline;
+	int			nb_arg;
+	int			i;
+
+	nb_arg = ac - 3;
+	i = 0;
+	pipeline = malloc(sizeof(t_pipeline));
+	if (!pipeline)
+		return (NULL);
+	pipeline->nb_cmds = nb_arg;
+	pipeline->infile = av[1];
+	pipeline->outfile = av[ac - 1];
+	pipeline->envp = envp;
+	pipeline->cmds = malloc((nb_arg + 1) * sizeof(t_cmd *));
+	while (i < nb_arg)
 	{
-		print_error("no such file or directory:");
-		return (1);
+		pipeline->cmds[i] = init_cmd(av[i + 2], envp);
+		if (!pipeline->cmds[i])
+			return (free_pipeline(pipeline), NULL);
+		i++;
 	}
-	if (!cmd1)
-	{
-		print_error("Command 1 not found");
-		return (1);
-	}
-	if (!cmd2)
-	{
-		print_error("Command 2 not found");
-		return (1);
-	}
-	return (0);
+	pipeline->cmds[nb_arg] = NULL;
+	return (pipeline);
 }
 
 t_cmd	*init_cmd(char *arg, char **envp)
@@ -63,24 +70,6 @@ char	**get_args(char *args)
 	return (cmds);
 }
 
-char	*extract_path(char **envp)
-{
-	int		i;
-	char	*path;
-
-	i = 0;
-	while (envp[i])
-	{
-		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
-		{
-			path = envp[i] + 5;
-			return (path);
-		}
-		i++;
-	}
-	return (NULL);
-}
-
 char	*get_path(char *cmd, char **envp)
 {
 	int		i;
@@ -102,5 +91,23 @@ char	*get_path(char *cmd, char **envp)
 		i++;
 	}
 	free_tab(paths);
+	return (NULL);
+}
+
+char	*extract_path(char **envp)
+{
+	int i;
+	char *path;
+
+	i = 0;
+	while (envp[i])
+	{
+		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
+		{
+			path = envp[i] + 5;
+			return (path);
+		}
+		i++;
+	}
 	return (NULL);
 }

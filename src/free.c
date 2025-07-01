@@ -6,7 +6,7 @@
 /*   By: amweyer <amweyer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 19:28:20 by amweyer           #+#    #+#             */
-/*   Updated: 2025/06/30 20:44:26 by amweyer          ###   ########.fr       */
+/*   Updated: 2025/07/01 18:30:44 by amweyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,21 @@ void	free_tab(char **tab)
 	free(tab);
 }
 
-void	free_struct(t_cmd *cmd)
+void	free_pipeline(t_pipeline *pipeline)
+{
+	int	i;
+
+	i = 0;
+	while (pipeline->cmds[i])
+	{
+		free_cmd(pipeline->cmds[i]);
+		i++;
+	}
+	free(pipeline->cmds);
+	free(pipeline);
+}
+
+void	free_cmd(t_cmd *cmd)
 {
 	if (!cmd)
 		return ;
@@ -39,7 +53,7 @@ void	free_struct(t_cmd *cmd)
 }
 void	free_error(t_cmd *cmd1, t_cmd *cmd2)
 {
-	free_struct(cmd1);
-	free_struct(cmd2);
+	free_cmd(cmd1);
+	free_cmd(cmd2);
 	exit(1);
 }
