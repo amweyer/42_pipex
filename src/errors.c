@@ -6,7 +6,7 @@
 /*   By: amweyer <amweyer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 19:36:30 by amweyer           #+#    #+#             */
-/*   Updated: 2025/07/03 12:27:04 by amweyer          ###   ########.fr       */
+/*   Updated: 2025/07/03 19:29:09 by amweyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 void	print_error(char *msg)
 {
-	//ft_putstr_fd("Error: ", 2);
 	ft_putstr_fd(msg, 2);
 	ft_putchar_fd('\n', 2);
 	exit(1);
 }
+
 int	error_infile(char **av)
 {
 	if (access(av[1], R_OK) != 0)

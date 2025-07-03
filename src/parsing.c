@@ -6,7 +6,7 @@
 /*   By: amweyer <amweyer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 17:48:46 by amweyer           #+#    #+#             */
-/*   Updated: 2025/07/03 15:12:22 by amweyer          ###   ########.fr       */
+/*   Updated: 2025/07/03 19:30:47 by amweyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ t_pipeline	*init_pipeline(int ac, char **av, char **envp)
 	pipeline->outfile = av[ac - 1];
 	pipeline->envp = envp;
 	pipeline->cmds = malloc((nb_arg + 1) * sizeof(t_cmd *));
-	if(!pipeline->cmds)
-		return(NULL);
+	if (!pipeline->cmds)
+		return (NULL);
 	while (i < nb_arg)
 	{
 		pipeline->cmds[i] = init_cmd(av[i + 2], envp);
@@ -90,6 +90,7 @@ char	*get_path(char *cmd, char **envp)
 		if (access(full_path, X_OK) == 0)
 			return (free(tmp), free_tab(paths), full_path);
 		free(tmp);
+		free(full_path);
 		i++;
 	}
 	free_tab(paths);
@@ -98,8 +99,8 @@ char	*get_path(char *cmd, char **envp)
 
 char	*extract_path(char **envp)
 {
-	int i;
-	char *path;
+	int		i;
+	char	*path;
 
 	i = 0;
 	while (envp[i])

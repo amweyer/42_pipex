@@ -6,7 +6,7 @@
 /*   By: amweyer <amweyer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 19:28:20 by amweyer           #+#    #+#             */
-/*   Updated: 2025/07/01 18:30:44 by amweyer          ###   ########.fr       */
+/*   Updated: 2025/07/03 19:29:29 by amweyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	free_cmd(t_cmd *cmd)
 		free(cmd->path);
 	free(cmd);
 }
+
 void	free_error(t_cmd *cmd1, t_cmd *cmd2)
 {
 	free_cmd(cmd1);
