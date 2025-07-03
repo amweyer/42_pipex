@@ -6,7 +6,7 @@
 /*   By: amweyer <amweyer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 17:32:40 by amweyer           #+#    #+#             */
-/*   Updated: 2025/07/01 18:48:34 by amweyer          ###   ########.fr       */
+/*   Updated: 2025/07/03 11:25:27 by amweyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #include <stdio.h>
 
-void show(t_pipeline *pipeline)
+void show(const t_pipeline *pipeline)
 {
     int i, j;
 

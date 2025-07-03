@@ -6,7 +6,7 @@
 /*   By: amweyer <amweyer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:12:05 by amweyer           #+#    #+#             */
-/*   Updated: 2025/07/02 19:43:55 by amweyer          ###   ########.fr       */
+/*   Updated: 2025/07/03 11:26:31 by amweyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,11 @@ void		print_error(char *msg);
 int	error_infile(char **av);
 
 /* utils.c */
-void show(t_pipeline *pipeline);
+void show(const t_pipeline *pipeline);
 
 /* pipes.c */
 int execute_pipeline(const t_pipeline *pipeline);
-t_fd	*get_fd(t_fd *fd, t_pipeline *pipeline, int *pipefd, int i);
+t_fd	*get_fd(t_fd *fd, const t_pipeline *pipeline, int *pipefd, int i);
 
 
 #endif

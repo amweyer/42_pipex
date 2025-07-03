@@ -6,7 +6,7 @@
 /*   By: amweyer <amweyer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 18:14:27 by amweyer           #+#    #+#             */
-/*   Updated: 2025/07/02 19:15:15 by amweyer          ###   ########.fr       */
+/*   Updated: 2025/07/03 15:13:18 by amweyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,16 @@ int	main(int ac, char **av, char **envp)
 	
 	pipeline = init_pipeline(ac,av,envp);
 
-	
+	if(!pipeline)
+	{
+		ft_printf("Error in the pipeline creation\n");
+		return(1);
+	}
 	// show(pipeline);
 	/* ------------- PARSE ------------- */
-	execute_pipeline(pipeline);
-
+	int a = execute_pipeline(pipeline);
+	// ft_printf("%d\n",a);
+	(void) a;
 	
 	
 	free_pipeline(pipeline);

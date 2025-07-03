@@ -6,7 +6,7 @@
 /*   By: amweyer <amweyer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 20:08:02 by amweyer           #+#    #+#             */
-/*   Updated: 2025/07/02 19:38:22 by amweyer          ###   ########.fr       */
+/*   Updated: 2025/07/03 15:06:29 by amweyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@
 // 	return (fd);
 // }
 
-t_fd	*get_fd(t_fd *fd, t_pipeline *pipeline, int *pipefd, int i)
+t_fd	*get_fd(t_fd *fd, const t_pipeline *pipeline, int *pipefd, int i)
 {
 
 	// printf(" ------------------ %d -------------------\n", i);
@@ -56,12 +56,6 @@ t_fd	*get_fd(t_fd *fd, t_pipeline *pipeline, int *pipefd, int i)
 	// printf("[pipeline->outfile] %s\n", pipeline->outfile);
 	// printf("[pipeline->nb_cmd] %d\n", pipeline->nb_cmds);
 
-	if (!fd)
-	{
-		fd = malloc(sizeof(t_fd));
-		if (!fd)
-			return (NULL);
-	}
 	if (i == 0)
 	{
 		fd->in = open(pipeline->infile, O_RDONLY);
@@ -78,14 +72,17 @@ t_fd	*get_fd(t_fd *fd, t_pipeline *pipeline, int *pipefd, int i)
 	return (fd);
 }
 
-int	execute_pipeline(t_pipeline *pipeline)
+int	execute_pipeline(const t_pipeline *pipeline)
 {
 	int		i;
 	int		pipefd[2];
 	pid_t	pid;
 	t_fd	*fd;
-
+	
 	i = 0;
+	fd = malloc(sizeof(t_fd));
+	if (!fd)
+		return (1);
 	// printf(" ------------------ %d -------------------\n", i);
 	// show(pipeline);
 	// show(pipeline);
@@ -93,12 +90,11 @@ int	execute_pipeline(t_pipeline *pipeline)
 
 	while (i < pipeline->nb_cmds)
 	{
-
 		// printf("[pipeline->outflie] %s\n", pipeline->outfile);
 		pipe(pipefd);
 		fd = get_fd(fd, pipeline, pipefd, i);
-		printf(" ------------------ %d -------------------\n", i);
-		show(pipeline);
+		// printf(" ------------------ %d -------------------\n", i);
+		// show(pipeline);
 		if (!fd)
 			return (1);
 		pid = fork();
@@ -132,7 +128,7 @@ int	execute_pipeline(t_pipeline *pipeline)
 		i++;
 	}
 	close(fd->in);
-	while (waitpid(0, NULL, 0) != -1)
-		;
+	// while (waitpid(0, NULL, 0) != -1)
+	// 	;
 	return (0);
 }

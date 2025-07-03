@@ -6,7 +6,7 @@
 /*   By: amweyer <amweyer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 17:48:46 by amweyer           #+#    #+#             */
-/*   Updated: 2025/07/02 19:29:25 by amweyer          ###   ########.fr       */
+/*   Updated: 2025/07/03 15:12:22 by amweyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ t_pipeline	*init_pipeline(int ac, char **av, char **envp)
 	pipeline->outfile = av[ac - 1];
 	pipeline->envp = envp;
 	pipeline->cmds = malloc((nb_arg + 1) * sizeof(t_cmd *));
+	if(!pipeline->cmds)
+		return(NULL);
 	while (i < nb_arg)
 	{
 		pipeline->cmds[i] = init_cmd(av[i + 2], envp);
