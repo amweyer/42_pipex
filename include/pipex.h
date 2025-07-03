@@ -6,7 +6,7 @@
 /*   By: amweyer <amweyer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:12:05 by amweyer           #+#    #+#             */
-/*   Updated: 2025/07/01 18:50:09 by amweyer          ###   ########.fr       */
+/*   Updated: 2025/07/02 19:43:55 by amweyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,12 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
+#include <sys/wait.h>
 
 # define INT_MIN -2147483648
 # define INT_MAX 2147483647
+# define READ 0
+# define WRITE 1
 
 typedef struct s_cmd
 {
@@ -40,6 +43,13 @@ typedef struct s_pipeline
 	t_cmd	**cmds;
 	char	**envp;
 }			t_pipeline;
+
+typedef struct s_fd
+{
+	int		in;
+	int 	out;
+
+}			t_fd;
 
 /* parsing.c */
 t_pipeline	*init_pipeline(int ac, char **av, char **envp);
@@ -60,14 +70,12 @@ void	free_pipeline(t_pipeline *pipeline);
 void		print_error(char *msg);
 int	error_infile(char **av);
 
-/* files.c */
-int			get_fd(char *file, int in);
-
 /* utils.c */
-
 void show(t_pipeline *pipeline);
 
-
+/* pipes.c */
+int execute_pipeline(const t_pipeline *pipeline);
+t_fd	*get_fd(t_fd *fd, t_pipeline *pipeline, int *pipefd, int i);
 
 
 #endif

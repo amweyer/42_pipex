@@ -6,7 +6,7 @@
 #    By: amweyer <amweyer@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/29 15:01:22 by amweyer           #+#    #+#              #
-#    Updated: 2025/07/01 18:48:58 by amweyer          ###   ########.fr        #
+#    Updated: 2025/07/02 17:31:09 by amweyer          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ SRC =  $(SRC_DIR)/main.c \
        $(SRC_DIR)/free.c \
        $(SRC_DIR)/utils.c \
        $(SRC_DIR)/errors.c \
-    #    $(SRC_DIR)/files.c \
+       $(SRC_DIR)/pipes.c \
 
 
 
@@ -46,7 +46,7 @@ CC = cc
 
 RM = rm -f
 
-CCFLAGS = -Wall -Werror -Wextra
+CCFLAGS = -g3 -Wall -Werror -Wextra
 
 CPPFLAGS = -I $(INC_DIR) -I $(LIBFT_DIR) -I $(PRINTF_DIR)
 
