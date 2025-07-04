@@ -6,7 +6,7 @@
 /*   By: amweyer <amweyer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 19:28:20 by amweyer           #+#    #+#             */
-/*   Updated: 2025/07/03 19:29:29 by amweyer          ###   ########.fr       */
+/*   Updated: 2025/07/04 12:35:03 by amweyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void	free_pipeline(t_pipeline *pipeline)
 		i++;
 	}
 	free(pipeline->cmds);
-	free(pipeline);
 }
 
 void	free_cmd(t_cmd *cmd)

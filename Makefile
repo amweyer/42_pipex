@@ -6,7 +6,7 @@
 #    By: amweyer <amweyer@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/29 15:01:22 by amweyer           #+#    #+#              #
-#    Updated: 2025/07/03 19:28:30 by amweyer          ###   ########.fr        #
+#    Updated: 2025/07/04 12:09:17 by amweyer          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,9 +24,9 @@ SRC =  $(SRC_DIR)/main.c \
        $(SRC_DIR)/parsing.c \
        $(SRC_DIR)/free.c \
        $(SRC_DIR)/utils.c \
-       $(SRC_DIR)/errors.c \
        $(SRC_DIR)/pipe.c \
        $(SRC_DIR)/pipe_utils.c \
+       $(SRC_DIR)/pipe_init.c \
 
 
 

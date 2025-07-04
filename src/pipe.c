@@ -1,37 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipes.c                                            :+:      :+:    :+:   */
+/*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amweyer <amweyer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 20:08:02 by amweyer           #+#    #+#             */
-/*   Updated: 2025/07/03 19:27:41 by amweyer          ###   ########.fr       */
+/*   Updated: 2025/07/04 12:50:03 by amweyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	execute_pipeline(const t_pipeline *pipeline)
+void	execute_pipeline(t_pipeline *pipeline)
 {
 	t_fd	*fd;
 	int		res;
 
 	fd = malloc(sizeof(t_fd));
 	if (!fd)
-		return (1);
+	{
+		free_pipeline(pipeline);
+		exit(EXIT_FAILURE);
+	}
 	res = launch_pipeline(fd, pipeline);
 	if (res)
 	{
 		free(fd);
-		return (1);
+		free_pipeline(pipeline);
+		exit (EXIT_FAILURE);
 	}
 	wait_pid(pipeline);
 	free(fd);
-	return (0);
 }
 
-int	launch_pipeline(t_fd *fd, const t_pipeline *pipeline)
+int	launch_pipeline(t_fd *fd, t_pipeline *pipeline)
 {
 	int		i;
 	int		pipefd[2];
@@ -60,7 +63,7 @@ int	launch_pipeline(t_fd *fd, const t_pipeline *pipeline)
 	return (0);
 }
 
-void	child_process(int i, int *pipefd, t_fd *fd, const t_pipeline *pipeline)
+void	child_process(int i, int *pipefd, t_fd *fd, t_pipeline *pipeline)
 {
 	dup2(fd->in, STDIN_FILENO);
 	dup2(fd->out, STDOUT_FILENO);
@@ -71,7 +74,7 @@ void	child_process(int i, int *pipefd, t_fd *fd, const t_pipeline *pipeline)
 	execve(pipeline->cmds[i]->path, pipeline->cmds[i]->args, pipeline->envp);
 }
 
-void	parent_process(int i, int *pipefd, t_fd *fd, const t_pipeline *pipeline)
+void	parent_process(int i, int *pipefd, t_fd *fd, t_pipeline *pipeline)
 {
 	close(fd->in);
 	close(fd->out);

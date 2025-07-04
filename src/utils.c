@@ -6,14 +6,14 @@
 /*   By: amweyer <amweyer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 17:32:40 by amweyer           #+#    #+#             */
-/*   Updated: 2025/07/03 19:29:44 by amweyer          ###   ########.fr       */
+/*   Updated: 2025/07/04 12:48:42 by amweyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 #include <stdio.h>
 
-void	show(const t_pipeline *pipeline)
+void	show(t_pipeline *pipeline)
 {
 	t_cmd	*cmd;
 

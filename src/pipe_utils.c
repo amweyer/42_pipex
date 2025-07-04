@@ -6,13 +6,13 @@
 /*   By: amweyer <amweyer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 19:25:09 by amweyer           #+#    #+#             */
-/*   Updated: 2025/07/03 19:27:33 by amweyer          ###   ########.fr       */
+/*   Updated: 2025/07/04 12:48:27 by amweyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-t_fd	*get_fd(t_fd *fd, const t_pipeline *pipeline, int *pipefd, int i)
+t_fd	*get_fd(t_fd *fd, t_pipeline *pipeline, int *pipefd, int i)
 {
 	if (i == 0)
 	{
@@ -30,7 +30,7 @@ t_fd	*get_fd(t_fd *fd, const t_pipeline *pipeline, int *pipefd, int i)
 	return (fd);
 }
 
-void	wait_pid(const t_pipeline *pipeline)
+void	wait_pid(t_pipeline *pipeline)
 {
 	int	i;
 	int	status;
@@ -41,4 +41,22 @@ void	wait_pid(const t_pipeline *pipeline)
 		wait(&status);
 		i++;
 	}
+}
+
+char	*extract_path(char **envp)
+{
+	int		i;
+	char	*path;
+
+	i = 0;
+	while (envp[i])
+	{
+		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
+		{
+			path = envp[i] + 5;
+			return (path);
+		}
+		i++;
+	}
+	return (NULL);
 }

@@ -5,112 +5,45 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: amweyer <amweyer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/25 17:48:46 by amweyer           #+#    #+#             */
-/*   Updated: 2025/07/03 19:30:47 by amweyer          ###   ########.fr       */
+/*   Created: 2025/06/30 19:36:30 by amweyer           #+#    #+#             */
+/*   Updated: 2025/07/04 12:14:14 by amweyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-t_pipeline	*init_pipeline(int ac, char **av, char **envp)
-{
-	t_pipeline	*pipeline;
-	int			nb_arg;
-	int			i;
 
-	nb_arg = ac - 3;
-	i = 0;
-	pipeline = malloc(sizeof(t_pipeline));
-	if (!pipeline)
-		return (NULL);
-	pipeline->nb_cmds = nb_arg;
-	pipeline->infile = av[1];
-	pipeline->outfile = av[ac - 1];
-	pipeline->envp = envp;
-	pipeline->cmds = malloc((nb_arg + 1) * sizeof(t_cmd *));
-	if (!pipeline->cmds)
-		return (NULL);
-	while (i < nb_arg)
+void parse(int ac, char **av)
+{
+	//check_ac(ac);
+	(void) ac;
+	check_infile(av);
+}
+
+void check_ac(int ac)
+{
+	if (ac != 5)
 	{
-		pipeline->cmds[i] = init_cmd(av[i + 2], envp);
-		if (!pipeline->cmds[i])
-			return (free_pipeline(pipeline), NULL);
-		i++;
+		perror("Incorrect number of arguments");
+		exit(EXIT_FAILURE);
 	}
-	pipeline->cmds[nb_arg] = NULL;
-	return (pipeline);
 }
 
-t_cmd	*init_cmd(char *arg, char **envp)
+void	check_infile(char **av)
 {
-	t_cmd	*cmd;
-
-	cmd = malloc(sizeof(t_cmd));
-	if (!cmd)
-		return (NULL);
-	cmd->args = get_args(arg);
-	if (!cmd->args)
-		return (free(cmd), NULL);
-	cmd->cmd = ft_strdup(cmd->args[0]);
-	if (!cmd->cmd)
-		return (free_tab(cmd->args), free(cmd), NULL);
-	cmd->path = get_path(cmd->cmd, envp);
-	if (!cmd->path)
-		return (free_tab(cmd->args), free(cmd->cmd), free(cmd), NULL);
-	return (cmd);
-}
-
-char	**get_args(char *args)
-{
-	int		i;
-	char	**cmds;
-
-	i = 0;
-	cmds = ft_split(args, ' ');
-	if (!cmds || !cmds[0])
-		return (NULL);
-	return (cmds);
-}
-
-char	*get_path(char *cmd, char **envp)
-{
-	int		i;
-	char	**paths;
-	char	*full_path;
-	char	*tmp;
-
-	i = 0;
-	paths = ft_split(extract_path(envp), ':');
-	if (!paths)
-		return (NULL);
-	while (paths[i])
+	if (access(av[1], R_OK) != 0)
 	{
-		tmp = ft_strjoin(paths[i], "/");
-		full_path = ft_strjoin((const char *)tmp, (const char *)cmd);
-		if (access(full_path, X_OK) == 0)
-			return (free(tmp), free_tab(paths), full_path);
-		free(tmp);
-		free(full_path);
-		i++;
+		perror("no such file or directory: ");
+		ft_putendl_fd(av[1], 2);
+		exit(EXIT_FAILURE);
 	}
-	free_tab(paths);
-	return (NULL);
 }
 
-char	*extract_path(char **envp)
-{
-	int		i;
-	char	*path;
 
-	i = 0;
-	while (envp[i])
-	{
-		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
-		{
-			path = envp[i] + 5;
-			return (path);
-		}
-		i++;
-	}
-	return (NULL);
+
+void	print_error(char *msg)
+{
+	ft_putstr_fd(msg, 2);
+	ft_putchar_fd('\n', 2);
+	exit(1);
 }
