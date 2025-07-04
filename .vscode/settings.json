@@ -3,6 +3,7 @@
         "stdio.h": "c",
         "ft_printf.h": "c",
         "string.h": "c",
-        "pipex.h": "c"
+        "pipex.h": "c",
+        "pipex_bonus.h": "c"
     }
 }

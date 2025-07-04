@@ -1,37 +1,49 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipe.c                                             :+:      :+:    :+:   */
+/*   pipe_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amweyer <amweyer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 20:08:02 by amweyer           #+#    #+#             */
-/*   Updated: 2025/07/04 16:45:15 by amweyer          ###   ########.fr       */
+/*   Updated: 2025/07/04 19:40:37 by amweyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
 void	execute_pipeline(t_pipeline *pipeline)
 {
 	t_fd	*fd;
 	int		res;
 
+	// show(pipeline);
 	fd = malloc(sizeof(t_fd));
 	if (!fd)
 	{
 		free_pipeline(pipeline);
 		exit(EXIT_FAILURE);
 	}
+	printf("Before res\n");
+
 	res = launch_pipeline(fd, pipeline);
+	printf("after res\n");
+
 	if (res)
 	{
 		free(fd);
 		free_pipeline(pipeline);
-		exit (EXIT_FAILURE);
+		exit(EXIT_FAILURE);
 	}
+	// printf("After\n");
+	printf("After exit faiure\n");
+
 	wait_pid(pipeline);
+	printf("Before free\n");
+
 	free(fd);
+	printf("After free\n");
+
 }
 
 int	launch_pipeline(t_fd *fd, t_pipeline *pipeline)
@@ -41,8 +53,12 @@ int	launch_pipeline(t_fd *fd, t_pipeline *pipeline)
 	pid_t	pid;
 
 	i = 0;
+
+	// printf("pipeline->nb_cmds: %d\n", pipeline->nb_cmds);
 	while (i < pipeline->nb_cmds)
 	{
+		// printf("i: %d\n",i);
+
 		pipe(pipefd);
 		fd = get_fd(fd, pipeline, pipefd, i);
 		if (!fd)
