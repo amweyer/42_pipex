@@ -6,7 +6,7 @@
 /*   By: amweyer <amweyer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 19:36:30 by amweyer           #+#    #+#             */
-/*   Updated: 2025/07/04 12:14:14 by amweyer          ###   ########.fr       */
+/*   Updated: 2025/07/04 12:53:27 by amweyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 
 void parse(int ac, char **av)
 {
-	//check_ac(ac);
-	(void) ac;
+	check_ac(ac);
 	check_infile(av);
 }
 
