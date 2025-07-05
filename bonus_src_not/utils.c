@@ -6,7 +6,7 @@
 /*   By: amweyer <amweyer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 17:32:40 by amweyer           #+#    #+#             */
-/*   Updated: 2025/07/05 13:49:23 by amweyer          ###   ########.fr       */
+/*   Updated: 2025/07/04 19:27:45 by amweyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	show(t_pipeline *pipeline)
 	printf("  infile: %s\n", pipeline->infile ? pipeline->infile : "NULL");
 	printf("  outfile: %s\n", pipeline->outfile ? pipeline->outfile : "NULL");
 	printf("  nb_cmds: %d\n", pipeline->nb_cmds);
-	// printf("  here_doc: %d\n", pipeline->here_doc);
+	printf("  here_doc: %d\n", pipeline->here_doc);
 	for (i = 0; i < pipeline->nb_cmds; i++)
 	{
 		cmd = pipeline->cmds[i];

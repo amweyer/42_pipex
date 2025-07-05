@@ -1,44 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_bonus.c                                    :+:      :+:    :+:   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amweyer <amweyer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/30 19:36:30 by amweyer           #+#    #+#             */
-/*   Updated: 2025/07/05 13:44:23 by amweyer          ###   ########.fr       */
+/*   Created: 2025/06/25 18:14:27 by amweyer           #+#    #+#             */
+/*   Updated: 2025/07/04 19:38:45 by amweyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-void	parse(int ac, char **av)
+int	main(int ac, char **av, char **envp)
 {
-	check_ac(ac);
-	check_infile(av);
-}
+	t_pipeline	pipeline;
 
-void	check_ac(int ac)
-{
-	if (ac != 5)
-	{
-		ft_printf("Incorrect number of arguments");
-		exit(EXIT_FAILURE);
-	}
-}
-
-void	check_infile(char **av)
-{
-	if (access(av[1], R_OK) != 0)
-	{
-		perror("Error");
-		exit(EXIT_FAILURE);
-	}
-}
-
-void	print_error(char *msg)
-{
-	ft_putstr_fd(msg, 2);
-	ft_putchar_fd('\n', 2);
-	exit(1);
+	parse(av,&pipeline);
+	init_pipeline(ac, av, envp, &pipeline);
+	execute_pipeline(&pipeline);
+	ft_printf("after");
+	free_pipeline(&pipeline);
+	return (0);
 }

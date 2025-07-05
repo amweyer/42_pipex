@@ -6,7 +6,7 @@
 /*   By: amweyer <amweyer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 19:25:09 by amweyer           #+#    #+#             */
-/*   Updated: 2025/07/05 13:44:30 by amweyer          ###   ########.fr       */
+/*   Updated: 2025/07/04 16:49:21 by amweyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ void	wait_pid(t_pipeline *pipeline)
 
 char	*extract_path(char **envp)
 {
-	int		i;
-	char	*path;
+	int i;
+	char *path;
 
 	i = 0;
 	while (envp[i])
