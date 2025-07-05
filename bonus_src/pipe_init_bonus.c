@@ -6,7 +6,7 @@
 /*   By: amweyer <amweyer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 17:48:46 by amweyer           #+#    #+#             */
-/*   Updated: 2025/07/05 13:44:28 by amweyer          ###   ########.fr       */
+/*   Updated: 2025/07/05 15:27:58 by amweyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,23 @@ void	init_pipeline(int ac, char **av, char **envp, t_pipeline *pipeline)
 {
 	if (!pipeline)
 		exit(EXIT_FAILURE);
-	pipeline->nb_cmds = ac - 3;
-	pipeline->infile = av[1];
 	pipeline->outfile = av[ac - 1];
 	pipeline->envp = envp;
-	get_all_cmds(pipeline, av, envp);
+	if (pipeline->here_doc)
+	{
+		pipeline->nb_cmds = ac - 4;
+		pipeline->infile = "infile";
+		get_all_cmds(pipeline, av, envp, 3);
+	}
+	else
+	{
+		pipeline->nb_cmds = ac - 3;
+		pipeline->infile = av[1];
+		get_all_cmds(pipeline, av, envp, 2);
+	}
 }
 
-void	get_all_cmds(t_pipeline *pipeline, char **av, char **envp)
+void	get_all_cmds(t_pipeline *pipeline, char **av, char **envp, int start)
 {
 	int	i;
 	int	nb_arg;
@@ -38,7 +47,7 @@ void	get_all_cmds(t_pipeline *pipeline, char **av, char **envp)
 	}
 	while (i < nb_arg)
 	{
-		pipeline->cmds[i] = get_cmd(av[i + 2], envp);
+		pipeline->cmds[i] = get_cmd(av[i + start], envp);
 		if (!pipeline->cmds[i])
 		{
 			perror("Error with cmd");

@@ -1,0 +1,15 @@
+total 64$$
+-rwxr-xr-x 1 amweyer 2025_paris    25 Jul  3 18:06 a$$
+drwxr-xr-x 2 amweyer 2025_paris    50 Jul  5 14:13 bonus_include$$
+drwxr-xr-x 2 amweyer 2025_paris  4096 Jul  5 14:24 bonus_obj$$
+drwxr-xr-x 2 amweyer 2025_paris  4096 Jul  5 14:13 bonus_src$$
+drwxr-xr-x 2 amweyer 2025_paris  4096 Jul  5 14:24 bonus_src_not$$
+drwxr-xr-x 2 amweyer 2025_paris    21 Jun 25 17:35 include$$
+-rw-r--r-- 1 amweyer 2025_paris    28 Jul  5 14:21 infile$$
+drwxr-xr-x 2 amweyer 2025_paris  4096 Jul  5 14:15 libft$$
+-rw-r--r-- 1 amweyer 2025_paris  3174 Jul  5 14:24 Makefile$$
+drwxr-xr-x 2 amweyer 2025_paris    21 Jul  5 14:15 obj$$
+-rwxr-xr-x 1 amweyer 2025_paris 32856 Jul  5 14:24 pipex_bonus$$
+drwxr-xr-x 2 amweyer 2025_paris   190 Jul  5 14:15 printf$$
+drwxr-xr-x 2 amweyer 2025_paris   104 Jul  4 16:43 src$$
+-rwxr-xr-x 1 amweyer 2025_paris     0 Jul  5 14:24 thi$$

@@ -6,38 +6,29 @@
 /*   By: amweyer <amweyer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:09:13 by amayaweyer        #+#    #+#             */
-/*   Updated: 2025/07/05 14:04:47 by amweyer          ###   ########.fr       */
+/*   Updated: 2025/07/05 15:26:53 by amweyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "pipex_bonus.h"
 
-char	*ft_extract_line(char *stack)
+static char	**get_stack(void)
 {
-	int		i;
-	int		len;
-	char	*line;
+	static char	*stack = NULL;
 
-	if (!stack)
-		return (NULL);
-	i = 0;
-	len = 0;
-	while (stack[i] && stack[i] != '\n')
-		i++;
-	if (stack[i] == '\n')
-		i++;
-	len = i;
-	line = malloc((len + 1) * sizeof(char));
-	if (!line)
-		return (NULL);
-	i = 0;
-	while (i < len)
+	return (&stack);
+}
+
+void	free_gnl(void)
+{
+	char	**stack;
+
+	stack = get_stack();
+	if (*stack)
 	{
-		line[i] = stack[i];
-		i++;
+		free(*stack);
+		*stack = NULL;
 	}
-	line[i] = '\0';
-	return (line);
 }
 
 char	*ft_clean_stack(char *stack)
@@ -99,23 +90,24 @@ char	*ft_fill_stack(int fd, char *stack)
 
 char	*get_next_line(int fd)
 {
-	char		*line;
-	static char	*stack = NULL;
+	char	*line;
+	char	**stack_ptr;
 
+	stack_ptr = get_stack();
 	if (fd < 0 || fd > 1024 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
-		return (free(stack), stack = NULL, NULL);
-	if (!stack)
+		return (free(*stack_ptr), *stack_ptr = NULL, NULL);
+	if (!*stack_ptr)
 	{
-		stack = malloc(1);
-		if (!stack)
+		*stack_ptr = malloc(1);
+		if (!*stack_ptr)
 			return (NULL);
-		stack[0] = '\0';
+		(*stack_ptr)[0] = '\0';
 	}
-	stack = ft_fill_stack(fd, stack);
-	if (!stack || !*stack)
-		return (free(stack), stack = NULL, NULL);
-	line = ft_extract_line(stack);
-	stack = ft_clean_stack(stack);
+	*stack_ptr = ft_fill_stack(fd, *stack_ptr);
+	if (!*stack_ptr || !**stack_ptr)
+		return (free(*stack_ptr), *stack_ptr = NULL, NULL);
+	line = ft_extract_line(*stack_ptr);
+	*stack_ptr = ft_clean_stack(*stack_ptr);
 	return (line);
 }
 

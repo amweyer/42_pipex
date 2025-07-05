@@ -6,7 +6,7 @@
 /*   By: amweyer <amweyer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:12:05 by amweyer           #+#    #+#             */
-/*   Updated: 2025/07/04 17:15:52 by amweyer          ###   ########.fr       */
+/*   Updated: 2025/07/05 15:08:25 by amweyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ typedef struct s_fd
 }			t_fd;
 
 /* parsing.c */
-void		print_error(char *msg);
 void		check_infile(char **av);
 void		check_ac(int ac);
 void		parse(int ac, char **av);

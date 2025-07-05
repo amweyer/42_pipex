@@ -6,7 +6,7 @@
 /*   By: amweyer <amweyer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 19:36:30 by amweyer           #+#    #+#             */
-/*   Updated: 2025/07/04 15:48:09 by amweyer          ###   ########.fr       */
+/*   Updated: 2025/07/05 15:28:06 by amweyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,4 @@ void	check_infile(char **av)
 		perror("Error");
 		exit(EXIT_FAILURE);
 	}
-}
-
-void	print_error(char *msg)
-{
-	ft_putstr_fd(msg, 2);
-	ft_putchar_fd('\n', 2);
-	exit(1);
 }

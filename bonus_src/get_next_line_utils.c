@@ -6,11 +6,11 @@
 /*   By: amweyer <amweyer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:09:18 by amayaweyer        #+#    #+#             */
-/*   Updated: 2025/07/05 14:04:35 by amweyer          ###   ########.fr       */
+/*   Updated: 2025/07/05 15:26:37 by amweyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "pipex_bonus.h"
 
 size_t	ft_strlen(const char *s)
 {
@@ -67,4 +67,32 @@ char	*ft_strchr(const char *s, int c)
 	if (s1[i] == (unsigned char)c)
 		return (&s1[i]);
 	return (0);
+}
+
+char	*ft_extract_line(char *stack)
+{
+	int		i;
+	int		len;
+	char	*line;
+
+	if (!stack)
+		return (NULL);
+	i = 0;
+	len = 0;
+	while (stack[i] && stack[i] != '\n')
+		i++;
+	if (stack[i] == '\n')
+		i++;
+	len = i;
+	line = malloc((len + 1) * sizeof(char));
+	if (!line)
+		return (NULL);
+	i = 0;
+	while (i < len)
+	{
+		line[i] = stack[i];
+		i++;
+	}
+	line[i] = '\0';
+	return (line);
 }

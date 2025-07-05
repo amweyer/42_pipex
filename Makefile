@@ -6,7 +6,7 @@
 #    By: amweyer <amweyer@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/29 15:01:22 by amweyer           #+#    #+#              #
-#    Updated: 2025/07/04 18:58:38 by amweyer          ###   ########.fr        #
+#    Updated: 2025/07/05 14:30:46 by amweyer          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,17 +28,12 @@ INC_BONUS_DIR = bonus_include
 LIBFT_DIR = libft
 PRINTF_DIR = printf
 
-
-
 SRC =  $(SRC_DIR)/main.c \
        $(SRC_DIR)/parsing.c \
        $(SRC_DIR)/free.c \
        $(SRC_DIR)/pipe.c \
        $(SRC_DIR)/pipe_utils.c \
        $(SRC_DIR)/pipe_init.c \
-
-GNL_SRC = $(GNL_DIR)/get_next_line.c \
-          $(GNL_DIR)/get_next_line_utils.c
 
 BONUS_SRC = $(BONUS_DIR)/main_bonus.c \
 			$(BONUS_DIR)/parsing_bonus.c \
@@ -47,9 +42,10 @@ BONUS_SRC = $(BONUS_DIR)/main_bonus.c \
 			$(BONUS_DIR)/pipe_bonus.c \
 			$(BONUS_DIR)/pipe_utils_bonus.c \
 			$(BONUS_DIR)/pipe_init_bonus.c \
-			$(GNL_SRC)\
-			
-	
+			$(BONUS_DIR)/get_next_line_utils.c \
+			$(BONUS_DIR)/get_next_line.c \
+
+
 EVERYTHING_SRC = $(SRC) $(BONUS_SRC)
 
 CC = cc
