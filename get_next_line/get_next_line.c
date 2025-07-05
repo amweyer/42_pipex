@@ -6,7 +6,7 @@
 /*   By: amweyer <amweyer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:09:13 by amayaweyer        #+#    #+#             */
-/*   Updated: 2025/05/14 11:29:51 by amweyer          ###   ########.fr       */
+/*   Updated: 2025/07/05 14:04:47 by amweyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ char	*ft_fill_stack(int fd, char *stack)
 			return (NULL);
 		}
 		buf[r] = '\0';
-		stack = ft_strjoin(stack, buf);
+		stack = ft_strjoin_gnl(stack, buf);
 		if (!stack)
 		{
 			free(buf);

@@ -6,7 +6,7 @@
 /*   By: amweyer <amweyer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:09:18 by amayaweyer        #+#    #+#             */
-/*   Updated: 2025/05/13 18:12:20 by amweyer          ###   ########.fr       */
+/*   Updated: 2025/07/05 14:04:35 by amweyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ size_t	ft_strlen(const char *s)
 	return (l);
 }
 
-char	*ft_strjoin(char *s1, char const *s2)
+char	*ft_strjoin_gnl(char *s1, char const *s2)
 {
 	size_t	i;
 	size_t	j;
