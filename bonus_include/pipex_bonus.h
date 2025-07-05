@@ -6,7 +6,7 @@
 /*   By: amweyer <amweyer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:12:05 by amweyer           #+#    #+#             */
-/*   Updated: 2025/07/05 15:08:36 by amweyer          ###   ########.fr       */
+/*   Updated: 2025/07/05 15:35:26 by amweyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define PIPEX_BONUS_H
 
 # include "ft_printf.h"
-# include "get_next_line.h"
+# include "get_next_line_bonus.h"
 # include "libft.h"
 # include <fcntl.h>
 # include <stdbool.h>
@@ -53,14 +53,11 @@ typedef struct s_fd
 
 }			t_fd;
 
-int			check_here_doc(char **av);
-// void get_infile(char **av, t_pipeline *pipeline);
-
 /* parsing.c */
 void		check_infile(char **av);
 void		check_ac(int ac);
-// void	parse(char **av);
 void		parse(char **av, t_pipeline *pipeline);
+int			check_here_doc(char **av);
 
 /* free.c */
 void		free_tab(char **tab);

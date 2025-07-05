@@ -6,7 +6,7 @@
 #    By: amweyer <amweyer@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/29 15:01:22 by amweyer           #+#    #+#              #
-#    Updated: 2025/07/05 14:30:46 by amweyer          ###   ########.fr        #
+#    Updated: 2025/07/05 15:31:36 by amweyer          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,12 +38,11 @@ SRC =  $(SRC_DIR)/main.c \
 BONUS_SRC = $(BONUS_DIR)/main_bonus.c \
 			$(BONUS_DIR)/parsing_bonus.c \
 			$(BONUS_DIR)/free_bonus.c \
-			$(BONUS_DIR)/utils.c \
 			$(BONUS_DIR)/pipe_bonus.c \
 			$(BONUS_DIR)/pipe_utils_bonus.c \
 			$(BONUS_DIR)/pipe_init_bonus.c \
-			$(BONUS_DIR)/get_next_line_utils.c \
-			$(BONUS_DIR)/get_next_line.c \
+			$(BONUS_DIR)/get_next_line_utils_bonus.c \
+			$(BONUS_DIR)/get_next_line_bonus.c \
 
 
 EVERYTHING_SRC = $(SRC) $(BONUS_SRC)
