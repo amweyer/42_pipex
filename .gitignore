@@ -1,0 +1,11 @@
+# Ignorer les fichiers objets (compilation)
+obj/
+bonus_obj/
+
+# Ignorer tous les fichiers du dossier get_next_line/
+# get_next_line/
+
+# Ignorer les exécutables
+pipex
+pipex_bonus
+

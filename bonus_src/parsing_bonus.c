@@ -6,26 +6,25 @@
 /*   By: amweyer <amweyer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 19:36:30 by amweyer           #+#    #+#             */
-/*   Updated: 2025/07/05 13:44:23 by amweyer          ###   ########.fr       */
+/*   Updated: 2025/07/05 13:54:37 by amweyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-void	parse(int ac, char **av)
+void	parse(char **av)
 {
-	check_ac(ac);
 	check_infile(av);
 }
 
-void	check_ac(int ac)
-{
-	if (ac != 5)
-	{
-		ft_printf("Incorrect number of arguments");
-		exit(EXIT_FAILURE);
-	}
-}
+// void	check_ac(int ac)
+// {
+// 	if (ac != 5)
+// 	{
+// 		ft_printf("Incorrect number of arguments");
+// 		exit(EXIT_FAILURE);
+// 	}
+// }
 
 void	check_infile(char **av)
 {

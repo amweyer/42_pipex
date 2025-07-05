@@ -6,7 +6,7 @@
 /*   By: amweyer <amweyer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:12:05 by amweyer           #+#    #+#             */
-/*   Updated: 2025/07/05 13:50:05 by amweyer          ###   ########.fr       */
+/*   Updated: 2025/07/05 13:54:46 by amweyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ typedef struct s_fd
 void		print_error(char *msg);
 void		check_infile(char **av);
 void		check_ac(int ac);
-void		parse(int ac, char **av);
+void	parse(char **av);
 
 /* free.c */
 void		free_tab(char **tab);
