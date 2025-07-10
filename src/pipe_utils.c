@@ -6,29 +6,11 @@
 /*   By: amweyer <amweyer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 19:25:09 by amweyer           #+#    #+#             */
-/*   Updated: 2025/07/05 15:28:24 by amweyer          ###   ########.fr       */
+/*   Updated: 2025/07/09 21:09:14 by amweyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-t_fd	*get_fd(t_fd *fd, t_pipeline *pipeline, int *pipefd, int i)
-{
-	if (i == 0)
-	{
-		fd->in = open(pipeline->infile, O_RDONLY);
-		fd->out = pipefd[WRITE];
-	}
-	else if (i == pipeline->nb_cmds - 1)
-	{
-		fd->out = open(pipeline->outfile, O_WRONLY | O_CREAT | O_TRUNC, 0777);
-		close(pipefd[READ]);
-		close(pipefd[WRITE]);
-	}
-	else
-		fd->out = pipefd[WRITE];
-	return (fd);
-}
 
 void	wait_pid(t_pipeline *pipeline)
 {
@@ -59,4 +41,27 @@ char	*extract_path(char **envp)
 		i++;
 	}
 	return (NULL);
+}
+
+void	close_all_fds(t_fd *fd, int *pipefd)
+{
+	if (fd->in >= 0)
+		close(fd->in);
+	if (fd->out >= 0)
+		close(fd->out);
+	if (pipefd)
+	{
+		close(pipefd[READ]);
+		close(pipefd[WRITE]);
+	}
+}
+
+int	create_pipe(int pipefd[2])
+{
+	if (pipe(pipefd) == -1)
+	{
+		perror("pipe");
+		return (1);
+	}
+	return (0);
 }

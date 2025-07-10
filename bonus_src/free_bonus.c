@@ -6,7 +6,7 @@
 /*   By: amweyer <amweyer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 19:28:20 by amweyer           #+#    #+#             */
-/*   Updated: 2025/07/05 13:44:18 by amweyer          ###   ########.fr       */
+/*   Updated: 2025/07/09 15:30:59 by amweyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,10 @@ void	free_pipeline(t_pipeline *pipeline)
 	int	i;
 
 	i = 0;
-	while (pipeline->cmds[i])
+	while (i < pipeline->nb_cmds)
 	{
-		free_cmd(pipeline->cmds[i]);
+		if (pipeline->cmds[i])
+			free_cmd(pipeline->cmds[i]);
 		i++;
 	}
 	free(pipeline->cmds);
@@ -51,9 +52,13 @@ void	free_cmd(t_cmd *cmd)
 	free(cmd);
 }
 
-void	free_error(t_cmd *cmd1, t_cmd *cmd2)
+void	free_error(t_pipeline *pipeline, t_fd *fd, int pipefd[2])
 {
-	free_cmd(cmd1);
-	free_cmd(cmd2);
-	exit(1);
+	perror("");
+	close_all_fds(fd, pipefd);
+	if (fd)
+		free(fd);
+	if (pipeline)
+		free_pipeline(pipeline);
+	exit(EXIT_FAILURE);
 }

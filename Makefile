@@ -6,7 +6,7 @@
 #    By: amweyer <amweyer@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/29 15:01:22 by amweyer           #+#    #+#              #
-#    Updated: 2025/07/05 15:31:36 by amweyer          ###   ########.fr        #
+#    Updated: 2025/07/07 11:59:47 by amweyer          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -93,6 +93,7 @@ fclean: clean
 	@$(MAKE) -C $(LIBFT_DIR) fclean
 	@$(MAKE) -C $(PRINTF_DIR) fclean
 	$(RM) $(NAME)
+	$(RM) $(NAME_BONUS)
 	$(RM) $(BONUS_OBJS) 
 	@echo "${GREEN}Clean up done.{DEF_COLOR}"
 

@@ -6,7 +6,7 @@
 /*   By: amweyer <amweyer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 20:08:02 by amweyer           #+#    #+#             */
-/*   Updated: 2025/07/05 13:44:25 by amweyer          ###   ########.fr       */
+/*   Updated: 2025/07/09 19:14:56 by amweyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,62 +15,61 @@
 void	execute_pipeline(t_pipeline *pipeline)
 {
 	t_fd	*fd;
-	int		res;
+	int		i;
+	int		pipefd[2];
+	pid_t	pid;
 
 	fd = malloc(sizeof(t_fd));
 	if (!fd)
+		free_error(pipeline, NULL, NULL);
+	i = 0;
+	while (i < pipeline->nb_cmds)
 	{
-		free_pipeline(pipeline);
-		exit(EXIT_FAILURE);
-	}
-	res = launch_pipeline(fd, pipeline);
-	if (res)
-	{
-		free(fd);
-		free_pipeline(pipeline);
-		exit (EXIT_FAILURE);
+		if (create_pipe(pipefd))
+			free_error(pipeline, fd, NULL);
+		fd = get_fd(fd, pipeline, pipefd, i);
+		pid = fork();
+		if (pid < 0)
+			free_error(pipeline, fd, NULL);
+		if (pid == 0)
+			child_process(i, pipefd, fd, pipeline);
+		parent_process(i, pipefd, fd, pipeline);
+		i++;
 	}
 	wait_pid(pipeline);
 	free(fd);
 }
 
-int	launch_pipeline(t_fd *fd, t_pipeline *pipeline)
+t_fd	*get_fd(t_fd *fd, t_pipeline *pipeline, int *pipefd, int i)
 {
-	int		i;
-	int		pipefd[2];
-	pid_t	pid;
-
-	i = 0;
-	while (i < pipeline->nb_cmds)
+	if (i == 0)
 	{
-		pipe(pipefd);
-		fd = get_fd(fd, pipeline, pipefd, i);
-		if (!fd)
-			return (free(fd), 1);
-		pid = fork();
-		if (pid < 0)
-		{
-			perror("fork fail");
-			return (1);
-		}
-		if (pid == 0)
-			child_process(i, pipefd, fd, pipeline);
-		else
-			parent_process(i, pipefd, fd, pipeline);
-		i++;
+		fd->in = open(pipeline->infile, O_RDONLY);
+		fd->out = pipefd[WRITE];
 	}
-	return (0);
+	else if (i == pipeline->nb_cmds - 1)
+	{
+		fd->out = open(pipeline->outfile, O_WRONLY | O_CREAT | O_TRUNC, 0664);
+		close(pipefd[READ]);
+		close(pipefd[WRITE]);
+	}
+	else
+		fd->out = pipefd[WRITE];
+	return (fd);
 }
 
 void	child_process(int i, int *pipefd, t_fd *fd, t_pipeline *pipeline)
 {
-	dup2(fd->in, STDIN_FILENO);
-	dup2(fd->out, STDOUT_FILENO);
-	close(pipefd[READ]);
-	close(pipefd[WRITE]);
-	close(fd->in);
-	close(fd->out);
+	if (fd->in < 0 || fd->out < 0)
+		free_error(pipeline, fd, pipefd);
+	if (dup2(fd->in, STDIN_FILENO) == -1 || dup2(fd->out, STDOUT_FILENO) == -1)
+		free_error(pipeline, fd, pipefd);
+	close_all_fds(fd, pipefd);
+	if (!pipeline->cmds[i])
+		free_error(pipeline, fd, pipefd);
 	execve(pipeline->cmds[i]->path, pipeline->cmds[i]->args, pipeline->envp);
+	perror("execve");
+	exit(EXIT_FAILURE);
 }
 
 void	parent_process(int i, int *pipefd, t_fd *fd, t_pipeline *pipeline)

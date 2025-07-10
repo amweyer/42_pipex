@@ -6,7 +6,7 @@
 /*   By: amweyer <amweyer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:12:05 by amweyer           #+#    #+#             */
-/*   Updated: 2025/07/05 15:08:25 by amweyer          ###   ########.fr       */
+/*   Updated: 2025/07/08 15:34:51 by amweyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,12 @@ typedef struct s_fd
 }			t_fd;
 
 /* parsing.c */
-void		check_infile(char **av);
 void		check_ac(int ac);
-void		parse(int ac, char **av);
 
 /* free.c */
 void		free_tab(char **tab);
 void		free_cmd(t_cmd *cmd);
-void		free_error(t_cmd *cmd1, t_cmd *cmd2);
+void		free_error(t_pipeline *pipeline, t_fd *fd, int pipefd[2]);
 void		free_pipeline(t_pipeline *pipeline);
 
 /* pipe_init.c */
@@ -82,5 +80,9 @@ void		parent_process(int i, int *pipefd, t_fd *fd, t_pipeline *pipeline);
 
 /* utils.c */
 void		show(t_pipeline *pipeline);
+
+void		close_all_fds(t_fd *fd, int *pipefd);
+int			create_pipe(int pipefd[2]);
+pid_t		create_process(int i, int *pipefd, t_fd *fd, t_pipeline *pipeline);
 
 #endif

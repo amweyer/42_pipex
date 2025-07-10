@@ -6,7 +6,7 @@
 /*   By: amweyer <amweyer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 17:48:46 by amweyer           #+#    #+#             */
-/*   Updated: 2025/07/04 12:44:12 by amweyer          ###   ########.fr       */
+/*   Updated: 2025/07/09 19:14:36 by amweyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,10 @@ void	get_all_cmds(t_pipeline *pipeline, char **av, char **envp)
 	nb_arg = pipeline->nb_cmds;
 	pipeline->cmds = malloc((nb_arg + 1) * sizeof(t_cmd *));
 	if (!pipeline->cmds)
-	{
-		perror("Error with cmd");
-		exit(EXIT_FAILURE);
-	}
+		free_error(NULL, NULL, NULL);
 	while (i < nb_arg)
 	{
 		pipeline->cmds[i] = get_cmd(av[i + 2], envp);
-		if (!pipeline->cmds[i])
-		{
-			perror("Error with cmd");
-			free_pipeline(pipeline);
-			exit(EXIT_FAILURE);
-		}
 		i++;
 	}
 	pipeline->cmds[nb_arg] = NULL;
@@ -89,6 +80,8 @@ char	*get_path(char *cmd, char **envp)
 	char	*tmp;
 
 	i = 0;
+	if (access(cmd, X_OK) == 0)
+		return (ft_strdup(cmd));
 	paths = ft_split(extract_path(envp), ':');
 	if (!paths)
 		return (NULL);

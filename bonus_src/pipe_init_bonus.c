@@ -6,7 +6,7 @@
 /*   By: amweyer <amweyer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 17:48:46 by amweyer           #+#    #+#             */
-/*   Updated: 2025/07/05 15:27:58 by amweyer          ###   ########.fr       */
+/*   Updated: 2025/07/09 19:14:51 by amweyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,6 @@ void	get_all_cmds(t_pipeline *pipeline, char **av, char **envp, int start)
 	while (i < nb_arg)
 	{
 		pipeline->cmds[i] = get_cmd(av[i + start], envp);
-		if (!pipeline->cmds[i])
-		{
-			perror("Error with cmd");
-			free_pipeline(pipeline);
-			exit(EXIT_FAILURE);
-		}
 		i++;
 	}
 	pipeline->cmds[nb_arg] = NULL;
