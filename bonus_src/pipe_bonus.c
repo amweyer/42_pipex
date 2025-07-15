@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amweyer <amweyer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: amayaweyer <amayaweyer@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 20:08:02 by amweyer           #+#    #+#             */
-/*   Updated: 2025/07/09 19:14:56 by amweyer          ###   ########.fr       */
+/*   Updated: 2025/07/11 10:20:03 by amayaweyer       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,13 @@ t_fd	*get_fd(t_fd *fd, t_pipeline *pipeline, int *pipefd, int i)
 
 void	child_process(int i, int *pipefd, t_fd *fd, t_pipeline *pipeline)
 {
+	if (!pipeline->cmds[i])
+		free_error(pipeline, fd, pipefd);
 	if (fd->in < 0 || fd->out < 0)
 		free_error(pipeline, fd, pipefd);
 	if (dup2(fd->in, STDIN_FILENO) == -1 || dup2(fd->out, STDOUT_FILENO) == -1)
 		free_error(pipeline, fd, pipefd);
 	close_all_fds(fd, pipefd);
-	if (!pipeline->cmds[i])
-		free_error(pipeline, fd, pipefd);
 	execve(pipeline->cmds[i]->path, pipeline->cmds[i]->args, pipeline->envp);
 	perror("execve");
 	exit(EXIT_FAILURE);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_init_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amweyer <amweyer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: amayaweyer <amayaweyer@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 17:48:46 by amweyer           #+#    #+#             */
-/*   Updated: 2025/07/09 19:14:51 by amweyer          ###   ########.fr       */
+/*   Updated: 2025/07/11 10:21:40 by amayaweyer       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,8 @@ t_cmd	*get_cmd(char *arg, char **envp)
 
 char	**get_args(char *args)
 {
-	int		i;
 	char	**cmds;
 
-	i = 0;
 	cmds = ft_split(args, ' ');
 	if (!cmds || !cmds[0])
 		return (NULL);

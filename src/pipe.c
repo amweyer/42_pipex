@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amweyer <amweyer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: amayaweyer <amayaweyer@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 20:08:02 by amweyer           #+#    #+#             */
-/*   Updated: 2025/07/09 21:32:54 by amweyer          ###   ########.fr       */
+/*   Updated: 2025/07/11 11:59:09 by amayaweyer       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ t_fd	*get_fd(t_fd *fd, t_pipeline *pipeline, int *pipefd, int i)
 
 void	child_process(int i, int *pipefd, t_fd *fd, t_pipeline *pipeline)
 {
+	if (!pipeline->cmds[i])
+		free_error(pipeline, fd, pipefd);
 	if (fd->in < 0 || fd->out < 0)
 		free_error(pipeline, fd, pipefd);
 	if (dup2(fd->in, STDIN_FILENO) == -1)
@@ -68,15 +70,6 @@ void	child_process(int i, int *pipefd, t_fd *fd, t_pipeline *pipeline)
 		free_error(pipeline, fd, pipefd);
 	
 	close_all_fds(fd, pipefd);
-	
-	if (!pipeline->cmds[i])
-	{
-		perror("");
-		close(fd->in);
-		close(fd->out);
-		ft_putendl_fd("Coucou",STDERR_FILENO);
-		free_error(pipeline, fd, pipefd);
-	}
 	execve(pipeline->cmds[i]->path, pipeline->cmds[i]->args, pipeline->envp);
 	perror("execve");
 	exit(EXIT_FAILURE);
