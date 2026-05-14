@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amayaweyer <amayaweyer@student.42.fr>      +#+  +:+       +#+        */
+/*   By: amweyer <amweyer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 17:48:46 by amweyer           #+#    #+#             */
-/*   Updated: 2025/07/11 10:21:52 by amayaweyer       ###   ########.fr       */
+/*   Updated: 2025/09/01 15:41:24 by amweyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,23 @@ void	init_pipeline(int ac, char **av, char **envp, t_pipeline *pipeline)
 {
 	if (!pipeline)
 		exit(EXIT_FAILURE);
-	pipeline->nb_cmds = ac - 3;
-	pipeline->infile = av[1];
 	pipeline->outfile = av[ac - 1];
 	pipeline->envp = envp;
-	get_all_cmds(pipeline, av, envp);
+	pipeline->exit_code = 0;
+	if (pipeline->here_doc)
+	{
+		pipeline->nb_cmds = ac - 4;
+		get_all_cmds(pipeline, av, envp, 3);
+	}
+	else
+	{
+		pipeline->nb_cmds = ac - 3;
+		pipeline->infile = av[1];
+		get_all_cmds(pipeline, av, envp, 2);
+	}
 }
 
-void	get_all_cmds(t_pipeline *pipeline, char **av, char **envp)
+void	get_all_cmds(t_pipeline *pipeline, char **av, char **envp, int start)
 {
 	int	i;
 	int	nb_arg;
@@ -32,10 +41,13 @@ void	get_all_cmds(t_pipeline *pipeline, char **av, char **envp)
 	nb_arg = pipeline->nb_cmds;
 	pipeline->cmds = malloc((nb_arg + 1) * sizeof(t_cmd *));
 	if (!pipeline->cmds)
-		free_error(NULL, NULL, NULL);
+	{
+		perror("Error with cmd");
+		exit(EXIT_FAILURE);
+	}
 	while (i < nb_arg)
 	{
-		pipeline->cmds[i] = get_cmd(av[i + 2], envp);
+		pipeline->cmds[i] = get_cmd(av[i + start], envp);
 		i++;
 	}
 	pipeline->cmds[nb_arg] = NULL;
@@ -65,8 +77,12 @@ char	**get_args(char *args)
 	char	**cmds;
 
 	cmds = ft_split(args, ' ');
-	if (!cmds || !cmds[0])
+	if (!cmds || !cmds[0] || !cmds[0][0])
+	{
+		if (cmds)
+			free(cmds);
 		return (NULL);
+	}
 	return (cmds);
 }
 
@@ -78,8 +94,6 @@ char	*get_path(char *cmd, char **envp)
 	char	*tmp;
 
 	i = 0;
-	if (access(cmd, X_OK) == 0)
-		return (ft_strdup(cmd));
 	paths = ft_split(extract_path(envp), ':');
 	if (!paths)
 		return (NULL);

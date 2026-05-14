@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amayaweyer <amayaweyer@student.42.fr>      +#+  +:+       +#+        */
+/*   By: amweyer <amweyer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 20:08:02 by amweyer           #+#    #+#             */
-/*   Updated: 2025/07/11 11:59:09 by amayaweyer       ###   ########.fr       */
+/*   Updated: 2025/09/01 15:52:35 by amweyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	execute_pipeline(t_pipeline *pipeline)
 		parent_process(i, pipefd, fd, pipeline);
 		i++;
 	}
-	wait_pid(pipeline);
+	wait_pid(pipeline, pid);
 	free(fd);
 }
 
@@ -44,14 +44,24 @@ t_fd	*get_fd(t_fd *fd, t_pipeline *pipeline, int *pipefd, int i)
 {
 	if (i == 0)
 	{
-		fd->in = open(pipeline->infile, O_RDONLY);
+		if (pipeline->here_doc)
+			fd->in = pipeline->pipe_hd;
+		else
+			fd->in = open(pipeline->infile, O_RDONLY);
 		fd->out = pipefd[WRITE];
 	}
 	else if (i == pipeline->nb_cmds - 1)
 	{
-		fd->out = open(pipeline->outfile, O_WRONLY | O_CREAT | O_TRUNC, 0664);
-		close(pipefd[READ]);
-		close(pipefd[WRITE]);
+		if (pipeline->here_doc)
+			fd->out = open(pipeline->outfile, O_WRONLY | O_CREAT | O_APPEND,
+					0664);
+		else
+			fd->out = open(pipeline->outfile, O_WRONLY | O_CREAT | O_TRUNC,
+					0664);
+		if (pipefd[READ] >= 0)
+			close(pipefd[READ]);
+		if (pipefd[WRITE] >= 0)
+			close(pipefd[WRITE]);
 	}
 	else
 		fd->out = pipefd[WRITE];
@@ -61,14 +71,20 @@ t_fd	*get_fd(t_fd *fd, t_pipeline *pipeline, int *pipefd, int i)
 void	child_process(int i, int *pipefd, t_fd *fd, t_pipeline *pipeline)
 {
 	if (!pipeline->cmds[i])
+	{
+		pipeline->exit_code = 127;
 		free_error(pipeline, fd, pipefd);
+	}
 	if (fd->in < 0 || fd->out < 0)
+	{
+		pipeline->exit_code = 1;
 		free_error(pipeline, fd, pipefd);
-	if (dup2(fd->in, STDIN_FILENO) == -1)
+	}
+	if (dup2(fd->in, STDIN_FILENO) == -1 || dup2(fd->out, STDOUT_FILENO) == -1)
+	{
+		pipeline->exit_code = 1;
 		free_error(pipeline, fd, pipefd);
-	if(dup2(fd->out, STDOUT_FILENO) == -1)
-		free_error(pipeline, fd, pipefd);
-	
+	}
 	close_all_fds(fd, pipefd);
 	execve(pipeline->cmds[i]->path, pipeline->cmds[i]->args, pipeline->envp);
 	perror("execve");
@@ -77,8 +93,10 @@ void	child_process(int i, int *pipefd, t_fd *fd, t_pipeline *pipeline)
 
 void	parent_process(int i, int *pipefd, t_fd *fd, t_pipeline *pipeline)
 {
-	close(fd->in);
-	close(fd->out);
+	if (fd->in >= 0)
+		close(fd->in);
+	if (fd->out >= 0)
+		close(fd->out);
 	if (i < pipeline->nb_cmds - 1)
 		fd->in = pipefd[READ];
 }

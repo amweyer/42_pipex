@@ -6,22 +6,29 @@
 /*   By: amweyer <amweyer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 19:25:09 by amweyer           #+#    #+#             */
-/*   Updated: 2025/07/09 21:09:14 by amweyer          ###   ########.fr       */
+/*   Updated: 2025/09/01 15:50:43 by amweyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	wait_pid(t_pipeline *pipeline)
+void	wait_pid(t_pipeline *pipeline, pid_t last_pid)
 {
-	int	i;
-	int	status;
+	int		status;
+	pid_t	wpid;
 
-	i = 0;
-	while (i < pipeline->nb_cmds)
+	pipeline->exit_code = 0;
+	wpid = wait(&status);
+	while ((wpid) > 0)
 	{
-		wait(&status);
-		i++;
+		if (wpid == last_pid)
+		{
+			if (WIFEXITED(status))
+				pipeline->exit_code = WEXITSTATUS(status);
+			else if (WIFSIGNALED(status))
+				pipeline->exit_code = 128 + WTERMSIG(status);
+		}
+		wpid = wait(&status);
 	}
 }
 

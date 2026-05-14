@@ -6,7 +6,7 @@
 /*   By: amweyer <amweyer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 19:28:20 by amweyer           #+#    #+#             */
-/*   Updated: 2025/07/09 15:30:42 by amweyer          ###   ########.fr       */
+/*   Updated: 2025/09/01 15:49:54 by amweyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	free_tab(char **tab)
 	int	i;
 
 	i = 0;
+	if (!tab)
+		return ;
 	while (tab[i])
 	{
 		free(tab[i]);
@@ -60,5 +62,5 @@ void	free_error(t_pipeline *pipeline, t_fd *fd, int pipefd[2])
 		free(fd);
 	if (pipeline)
 		free_pipeline(pipeline);
-	exit(EXIT_FAILURE);
+	exit(pipeline->exit_code);
 }
